@@ -1,6 +1,8 @@
 import React from "react";
 import SearchForm from "@/components/SearchForm";
 import StartupCard from "@/components/StartupCard";
+import { client } from "@/sanity/lib/client";
+import { STARTUPS_QUERY } from "@/sanity/lib/queries";
 
 const Home = async ({
   searchParams,
@@ -9,38 +11,9 @@ const Home = async ({
 }) => {
   const query = (await searchParams).query;
 
-  const posts = [
-    {
-      _createAt: new Date(),
-      views: 55,
-      author: { _id: 1 ,name:"aditya"},
-      _id: 1,
-      description: "this is a description",
-      image: "https://i0.wp.com/picjumbo.com/wp-content/uploads/watercolor-backgrounds-images.jpg?w=1024&quality=50",
-      category: "robots",
-      title: "this is a title",
-    },
-    {
-      _createAt: new Date(),
-      views: 55,
-      author: { _id: 1 ,name:"aditya"},
-      _id: 1,
-      description: "this is a description",
-      image: "https://i0.wp.com/picjumbo.com/wp-content/uploads/watercolor-backgrounds-images.jpg?w=1024&quality=50",
-      catergory: "robots",
-      title: "this is a title",
-    },
-    {
-      _createAt: new Date(),
-      views: 55,
-      author: { _id: 1 ,name:"aditya"},
-      _id: 1,
-      description: "this is a description",
-      image: "https://i0.wp.com/picjumbo.com/wp-content/uploads/watercolor-backgrounds-images.jpg?w=1024&quality=50",
-      catergory: "robots",
-      title: "this is a title",
-    },
-  ];
+  const data = await (client.fetch(STARTUPS_QUERY));
+
+  console.log('data: ',JSON.stringify(data));
 
   return (
     <>
