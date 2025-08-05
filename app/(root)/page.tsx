@@ -3,18 +3,14 @@ import SearchForm from "@/components/SearchForm";
 import StartupCard from "@/components/StartupCard";
 import { client } from "@/sanity/lib/client";
 import { STARTUPS_QUERY } from "@/sanity/lib/queries";
-
 const Home = async ({
   searchParams,
 }: {
   searchParams: Promise<{ query?: string }>;
 }) => {
   const query = (await searchParams).query;
-
-  const data = await (client.fetch(STARTUPS_QUERY));
-
-  console.log('data: ',JSON.stringify(data));
-
+  const posts = await client.fetch(STARTUPS_QUERY);
+  console.log("posts featching done: ✅")
   return (
     <>
       <section className="pink_container">
@@ -33,7 +29,11 @@ const Home = async ({
           {query ? `Search results for "${query}"` : `All Startups`}
         </p>
         <ul className=" mt-7 card_grid">
-          {posts && posts.map((post) => <StartupCard key={post._id} post={post} />)}
+          {posts && posts.length > 0 ? (
+            posts.map((post) => <StartupCard key={post._id} post={post} />)
+          ) : (
+            <p>No startups found.</p>
+          )}
         </ul>
       </section>
     </>
